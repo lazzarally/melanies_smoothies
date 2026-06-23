@@ -1,0 +1,19 @@
+definition_version: 2
+entities:
+  streamlit_app:
+    type: streamlit
+    main_file: AACUSTOMISE_YOUR_SMOOTHIE.py
+    artifacts:
+      - pyproject.toml
+      - AACUSTOMISE_YOUR_SMOOTHIE.py
+      - .streamlit/config.toml
+      - pages/
+    identifier:
+      database: SMOOTHIES
+      schema: PUBLIC
+      name: CUSTOMISE_YOUR_SMOOTHIE
+    title: Customise Your Smoothie
+    query_warehouse: COMPUTE_WH
+    compute_pool: SYSTEM_COMPUTE_POOL_CPU
+    run_mode: SpcsOnly
+    execute_as: OWNER
