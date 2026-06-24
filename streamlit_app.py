@@ -1,6 +1,5 @@
 # Import python packages
 import streamlit as st
-# from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark import Session
 from snowflake.snowpark.functions import col
 import requests
@@ -17,28 +16,16 @@ page = st.sidebar.selectbox(
 )
 
 
-# Set up sidebar navigation
-#page = st.sidebar.selectbox("Navigate", ["Order Smoothie", "Pending Smoothie Orders"])
-
 if page == "Pending Smoothie Orders":
     st.title(f":cup_with_straw: Pending Smoothie Orders ")
     st.write("Orders that need to be filled.")
     
     session = get_active_session()
     my_dataframe = session.table("smoothies.public.orders").select(col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
-    
-    # st.dataframe(data=my_dataframe, use_container_width=True)
 
-    # Convert Snowpark df into a Pandas df so we can use the LOC function
     pd_df=my_dataframe.to_pandas()
     st.dataframe(df.to_pandas(), use_container_width=True)
-    #st.stop()
-
-    #df = session.table("smoothies.public.orders").select(
-    ##    col('INGREDIENTS'),
-    #    col('NAME_ON_ORDER'),
-    #    col('ORDER_FILLED')
-    #)
+ 
 
 
 else:
@@ -48,22 +35,10 @@ else:
     name_on_order = st.text_input('Name on Smoothie:')
     st.write('The name on your Smoothie will be: ', name_on_order)
     
-    # works up to here AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    # my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
-    # pd_df = my_dataframe.to_pandas()
-    # ----- st.dataframe(pd_df, use_container_width=True)
 
-    # fruit_list = pd_df['FRUIT_NAME'].tolist()
-
-    ingredients_list = st.multiselect(
-        'Choose up to 5 ingredients:'
-        , my_dataframe
-        , max_selections=5
-        )
-
-
-    # st.dataframe(pd_df, use_container_width=True)
-
+    my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
+   
+    ingredients_list = st.multiselect('Choose up to 5 ingredients:', my_dataframe, max_selections=5)
 
     if ingredients_list:
         ingredients_string = ''
