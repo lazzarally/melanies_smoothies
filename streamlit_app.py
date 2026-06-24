@@ -23,7 +23,7 @@ if page == "Pending Smoothie Orders":
     my_dataframe = session.table("smoothies.public.orders").filter(col('ORDER_FILLED') == 0).select(col('ORDER_UID'),col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
 
     pd_df=my_dataframe.to_pandas()
-    edited_df = st.data_editor(pd_df, use_container_width=True)
+    edited_df = st.data_editor(pd_df, width=stretch)
     
     submitted = st.button('Submit')
 
