@@ -31,42 +31,34 @@ if page == "Pending Smoothie Orders":
 
     # Convert Snowpark df into a Pandas df so we can use the LOC function
     pd_df=my_dataframe.to_pandas()
-    #st.dataframe(pd_df)
+    st.dataframe(df.to_pandas(), use_container_width=True)
     #st.stop()
 
-    df = session.table("smoothies.public.orders").select(
-        col('INGREDIENTS'),
-        col('NAME_ON_ORDER'),
-        col('ORDER_FILLED')
-    )
+    #df = session.table("smoothies.public.orders").select(
+    ##    col('INGREDIENTS'),
+    #    col('NAME_ON_ORDER'),
+    #    col('ORDER_FILLED')
+    #)
 
-    st.dataframe(df.to_pandas(), use_container_width=True)
 
 else:
     st.title(f":cup_with_straw: Customise Your Smoothie:cup_with_straw:")
-    st.write(
-      """Choose the fruits you want in your Smoothie!
-      """
-    )
+    st.write("""Choose the fruits you want in your Smoothie!""")
 
     name_on_order = st.text_input('Name on Smoothie:')
     st.write('The name on your Smoothie will be: ', name_on_order)
 
-#    cnx = st.connection("snowflake")
-#    session = cnx_session()
     my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'),col('SEARCH_ON'))
-    st.dataframe(data=my_dataframe, use_container_width=True)
-    st.stop()
+    pd_df = my_dataframe.to_pandas()
+    st.dataframe(pd_df, use_container_width=True)
+
+    fruit_list = pd_df['FRUIT_NAME'].tolist()
 
     ingredients_list = st.multiselect(
         'Choose up to 5 ingredients:'
         , my_dataframe
         , max_selections=5
         )
-
-
-
-
 
     if ingredients_list:
         ingredients_string = ''
