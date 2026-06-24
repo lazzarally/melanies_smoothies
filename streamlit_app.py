@@ -20,7 +20,6 @@ if page == "Pending Smoothie Orders":
     st.title(f":cup_with_straw: Pending Smoothie Orders ")
     st.write("Orders that need to be filled.")
     
-    session = get_active_session()
     my_dataframe = session.table("smoothies.public.orders").select(col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
 
     pd_df=my_dataframe.to_pandas()
