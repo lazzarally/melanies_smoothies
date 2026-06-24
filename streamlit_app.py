@@ -20,7 +20,7 @@ if page == "Pending Smoothie Orders":
     st.title(f":cup_with_straw: Pending Smoothie Orders ")
     st.write("Orders that need to be filled.")
     
-    my_dataframe = session.table("smoothies.public.orders").filter(col('ORDER_FILLED') == 0).select(col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
+    my_dataframe = session.table("smoothies.public.orders").filter(col('ORDER_FILLED') == 0).select(col('ORDER_UID'),col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
 
     pd_df=my_dataframe.to_pandas()
     edited_df = st.data_editor(pd_df, use_container_width=True)
