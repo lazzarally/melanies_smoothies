@@ -3,7 +3,8 @@ import streamlit as st
 # from snowflake.snowpark.context import get_active_session
 from snowflake.snowpark import Session
 from snowflake.snowpark.functions import col
-import requests 
+import requests
+import pandas
 
 # Create session
 session = Session.builder.configs(st.secrets["snowflake"]).create()
@@ -26,7 +27,12 @@ if page == "Pending Smoothie Orders":
     session = get_active_session()
     my_dataframe = session.table("smoothies.public.orders").select(col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
     
-    st.dataframe(data=my_dataframe, use_container_width=True)
+    # st.dataframe(data=my_dataframe, use_container_width=True)
+
+    # Convert Snowpark df into a Pandas df so we can use the LOC function
+    pd_df=my_dataframe.to_pandas()
+    st.dataframe(pd_df)
+    st.stop()
 
 
     df = session.table("smoothies.public.orders").select(
