@@ -22,12 +22,19 @@ if page == "Pending Smoothie Orders":
     
     my_dataframe = session.table("smoothies.public.orders").filter(col('ORDER_FILLED') == 0).select(col('ORDER_UID'),col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
 
-    pd_df=my_dataframe.to_pandas()
-    edited_df = st.data_editor(pd_df, use_container_width=True)
-    
-    submitted = st.button('Submit')
+    pd_df = my_dataframe.to_pandas()
 
-    if submitted:
+    if pd_df.empty:
+        st.success('There are no pending orders right now', icon="👍")
+
+    else:
+        edited_df = st.data_editor(pd_df, use_container_width=True)
+    
+        submitted = st.button('Submit')
+
+        if submitted:
+            success = False
+
         try:
             og_dataset = session.table("smoothies.public.orders")
             
@@ -40,13 +47,15 @@ if page == "Pending Smoothie Orders":
                      , (og_dataset['ORDER_UID'] == edited_dataset['ORDER_UID'])
                      , [when_matched().update({'ORDER_FILLED': edited_dataset['ORDER_FILLED']})]
                     )
-
+            success = True
             st.success('Order(s) updated!', icon='👍')
-            st.rerun()
+       
         except:
             st.write('Something went wrong.')
-    if pd_df.empty:
-        st.success('There are no pending orders right now', icon="👍")
+        if success:
+            st.rerun()
+            
+
 
 
 else:
