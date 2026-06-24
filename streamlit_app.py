@@ -30,10 +30,11 @@ if page == "Pending Smoothie Orders":
     if submitted:
         try:
             og_dataset = session.table("smoothies.public.orders")
+            
             edited_dataset = session.create_dataframe(editable_df)
             
-            editable_df = st.data_editor(my_dataframe, column_config={"ORDER_UID": None, "ORDER_TS": None})
-            submitted = st.button('Submit')
+            # editable_df = st.data_editor(my_dataframe, column_config={"ORDER_UID": None, "ORDER_TS": None})
+            # submitted = st.button('Submit')
 
             og_dataset.merge(edited_dataset
                      , (og_dataset['ORDER_UID'] == edited_dataset['ORDER_UID'])
