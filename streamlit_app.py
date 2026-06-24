@@ -23,9 +23,10 @@ if page == "Pending Smoothie Orders":
     st.title(f":cup_with_straw: Pending Smoothie Orders ")
     st.write("Orders that need to be filled.")
     
-    #session = get_active_session()
-    #my_dataframe = session.table("smoothies.public.orders").select(col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
-    #st.dataframe(data=my_dataframe, use_container_width=True)
+    session = get_active_session()
+    my_dataframe = session.table("smoothies.public.orders").select(col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
+    
+    st.dataframe(data=my_dataframe, use_container_width=True)
 
 
     df = session.table("smoothies.public.orders").select(
