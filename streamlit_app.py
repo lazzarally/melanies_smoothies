@@ -42,6 +42,7 @@ if page == "Pending Smoothie Orders":
                     )
 
             st.success('Order(s) updated!', icon='👍')
+            st.rerun()
         except:
             st.write('Something went wrong.')
     if pd_df.empty:
