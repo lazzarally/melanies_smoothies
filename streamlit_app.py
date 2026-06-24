@@ -31,7 +31,7 @@ if page == "Pending Smoothie Orders":
         try:
             og_dataset = session.table("smoothies.public.orders")
             
-            edited_dataset = session.create_dataframe(editable_df)
+            edited_dataset = session.create_dataframe(edited_df)
             
             # editable_df = st.data_editor(my_dataframe, column_config={"ORDER_UID": None, "ORDER_TS": None})
             # submitted = st.button('Submit')
