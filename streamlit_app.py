@@ -23,7 +23,7 @@ if page == "Pending Smoothie Orders":
     my_dataframe = session.table("smoothies.public.orders").select(col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
 
     pd_df=my_dataframe.to_pandas()
-    st.dataframe(pd_df.to_pandas(), use_container_width=True)
+    st.dataframe(pd_df, use_container_width=True)
  
 
 
