@@ -52,8 +52,7 @@ if page == "Pending Smoothie Orders":
        
         except:
             st.write('Something went wrong.')
-        if success:
-            st.rerun()
+
             
 
 
