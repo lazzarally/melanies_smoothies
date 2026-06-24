@@ -1,7 +1,20 @@
 # Import python packages
 import streamlit as st
 # from snowflake.snowpark.context import get_active_session
+from snowflake.snowpark import Session
 from snowflake.snowpark.functions import col
+
+
+# Create session
+session = Session.builder.configs(st.secrets["snowflake"]).create()
+
+
+# Sidebar
+page = st.sidebar.selectbox(
+    "Choose a page",
+    ["Customise Your Smoothie", "Pending Smoothie Orders"]
+)
+
 
 # Set up sidebar navigation
 #page = st.sidebar.selectbox("Navigate", ["Order Smoothie", "Pending Smoothie Orders"])
@@ -9,9 +22,20 @@ from snowflake.snowpark.functions import col
 if page == "Pending Smoothie Orders":
     st.title(f":cup_with_straw: Pending Smoothie Orders ")
     st.write("Orders that need to be filled.")
-    session = get_active_session()
-    my_dataframe = session.table("smoothies.public.orders").select(col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
-    st.dataframe(data=my_dataframe, use_container_width=True)
+    
+    #session = get_active_session()
+    #my_dataframe = session.table("smoothies.public.orders").select(col('INGREDIENTS'), col('NAME_ON_ORDER'), col('ORDER_FILLED'))
+    #st.dataframe(data=my_dataframe, use_container_width=True)
+
+
+    df = session.table("smoothies.public.orders").select(
+        col('INGREDIENTS'),
+        col('NAME_ON_ORDER'),
+        col('ORDER_FILLED')
+    )
+
+    st.dataframe(df.to_pandas(), use_container_width=True)
+
 else:
     st.title(f":cup_with_straw: Customise Your Smoothie:cup_with_straw:")
     st.write(
