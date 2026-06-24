@@ -43,7 +43,7 @@ if page == "Pending Smoothie Orders":
             st.success('Order(s) updated!', icon='👍')
         except:
             st.write('Something went wrong.')
-    if pd_df.empty
+    if pd_df.empty:
         st.success('There are no pending orders right now', icon="👍")
 
 
